@@ -125,6 +125,9 @@ func (d *Definition) Apply(state, event string) (next string, ok bool, reason st
 // 目标沿正向不可达时返回 (false, nil)。
 // 调用前应已 Validate 且 from、to ∈ states。
 func (d *Definition) Path(from, to string) (bool, []string) {
+	if from == to {
+		return true, nil
+	}
 	adj := make(map[string][]Transition, len(d.States))
 	for _, t := range d.Transitions {
 		adj[t.From] = append(adj[t.From], t)
